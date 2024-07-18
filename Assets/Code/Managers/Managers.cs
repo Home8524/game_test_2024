@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 public static class Managers
 {
-    public static LocalDataManager dataManager;
+    public static LocalDataManager dataManager = new LocalDataManager();
 }

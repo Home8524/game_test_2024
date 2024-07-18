@@ -13,15 +13,20 @@ public class JsonTileData
 [Serializable]
 public class TileData
 {
-    public MoveVector startPos;
+    public MoveVector pos;
+    public MoveVector rotate;
     public bool isRotate;
-    public int rotateVal;
-    public int cnt;
-    public MoveVector movePos;
 }
 
+[Serializable]
 public class MoveVector
 {
-    public float x;
-    public float y;
+    public string x;
+    public string y;
+
+    public MoveVector(float x, float y)
+    {
+        this.x = x.ToString();
+        this.y = y.ToString();
+    }
 }

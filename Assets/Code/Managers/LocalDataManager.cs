@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class LocalDataManager
 {
-    string localPath = Application.dataPath + "/Resources/json";
+    string localPath = Application.dataPath + "/Resources/Json";
 
     private bool Load<T>(string fileName, out T data)
     {
@@ -28,5 +28,12 @@ public class LocalDataManager
     {
         Load("stage1", out JsonTileData data);
         return data.datas;
+    }
+
+    public bool Save<T>(string path, in T data)
+    {
+        string contents = JsonUtility.ToJson(data);
+        File.WriteAllText(path, contents);
+        return true;
     }
 }
