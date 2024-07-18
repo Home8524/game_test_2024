@@ -14,7 +14,7 @@ public class JsonTileData
 public class TileData
 {
     public MoveVector pos;
-    public MoveVector rotate;
+    public int rotate;
     public bool isRotate;
 }
 

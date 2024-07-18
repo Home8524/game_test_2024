@@ -8,11 +8,11 @@ using UnityEngine;
 
 public class LocalDataManager
 {
-    string localPath = Application.dataPath + "/Resources/Json";
+    string localPath = Application.dataPath + "/Resources/Json/";
 
     private bool Load<T>(string fileName, out T data)
     {
-        string path = $"{string.Format(localPath, fileName)}";
+        string path = localPath + fileName;
         if (File.Exists(path) == false)
         {
             data = default;
@@ -26,7 +26,7 @@ public class LocalDataManager
 
     public List<TileData> LoadTileData()
     {
-        Load("stage1", out JsonTileData data);
+        Load("stage1.json", out JsonTileData data);
         return data.datas;
     }
 
