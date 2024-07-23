@@ -5,21 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class StartButton : MonoBehaviour
 {
-    public GameObject Canvas1;
-    public GameObject Canvas2;
-    public GameObject Canvas3;
     public Text CanvansText;
     //Active에 할당된 캔버스와 volumeset에 할당된 캔버스가
     //각각 다름
     public void Active()
     {
-        Canvas1.SetActive(false);
-        Canvas3.SetActive(false);
-        Canvas2.SetActive(true);
         Time.timeScale = 1;
-        CanvansText.gameObject.SetActive(true);
         Singleton.GetInstance.Timer = 0.0f;
         Singleton.GetInstance.Resume = true;
+
+        Managers.uiManager.ActiveUi(eCanvas.text);
+        Managers.uiManager.ActiveReadyText();
     }
     public void Restart()
     {
@@ -38,8 +34,7 @@ public class StartButton : MonoBehaviour
 
     public void VolumeSet()
     {
-        Canvas2.SetActive(true);
-        Canvas1.SetActive(false);
+        Managers.uiManager.ActiveUi(eCanvas.volume);
     }
     public void Back()
     {

@@ -32,10 +32,6 @@ public class PlayerController : MonoBehaviour
     private GameObject P2;
     private TrailRenderer Trail;
 
-    //ui , text , blur 순
-    public GameObject Canvas1;
-    public GameObject Canvas2;
-    public GameObject Canvas3;
     [SerializeField] private Text CanvansText;
     public Text DieText;
     GameObject BackGround;
@@ -70,7 +66,10 @@ public class PlayerController : MonoBehaviour
         Boom = Resources.Load("Prefabs/SparkBlue") as GameObject;
     }
     private void Start()
-    {  
+    {
+        Managers.uiManager.LoadUI();
+        Managers.uiManager.ActiveUi(eCanvas.text);
+
         RouteLine = GameObject.Find("BlueRoute");
         BackGround = GameObject.Find("BackGround");
         Flash = GameObject.Find("Flash");
@@ -79,9 +78,7 @@ public class PlayerController : MonoBehaviour
         //리로드시 타임스케일 0->1로 변경하여 재시작
         Time.timeScale = 1;
         CanvansText = GameObject.Find("Ready").GetComponent<Text>();
-        //캔버스 비활성화
-        Canvas1.SetActive(false);
-        Canvas3.SetActive(false);
+
         Vector2 Tmp = new Vector2(5.8f,5.7f);   
         //현재 타일의 위치 저장
         Singleton.GetInstance.PosSave = Tmp;
@@ -110,9 +107,7 @@ public class PlayerController : MonoBehaviour
         //UI
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Canvas2.SetActive(false);
-            Canvas3.SetActive(true);
-            Canvas1.SetActive(true);
+            Managers.uiManager.ActiveUi(eCanvas.ui);
             Time.timeScale = 0;
             Singleton.GetInstance.StartActive = false;
             AudioS.Pause();
