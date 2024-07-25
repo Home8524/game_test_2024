@@ -13,7 +13,6 @@ public class World3Init : MonoBehaviour
         Singleton.GetInstance.WayRoute = -1.0f;
         Singleton.GetInstance.SlowObjectGo = false;
         Singleton.GetInstance.StartActive = true;
-        Singleton.GetInstance.Timer = 0.0f;
         Singleton.GetInstance.Resume = false;
     }
 

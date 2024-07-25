@@ -11,7 +11,6 @@ public class StartButton : MonoBehaviour
     public void Active()
     {
         Time.timeScale = 1;
-        Singleton.GetInstance.Timer = 0.0f;
         Singleton.GetInstance.Resume = true;
 
         Managers.uiManager.ActiveUi(eCanvas.text);
@@ -26,7 +25,6 @@ public class StartButton : MonoBehaviour
         Singleton.GetInstance.WayRoute = -1.0f;
         Singleton.GetInstance.SlowObjectGo = false;
         Singleton.GetInstance.StartActive = true;
-        Singleton.GetInstance.Timer = 0.0f;
         Singleton.GetInstance.Resume = false;
         SceneManager.LoadScene("Fire&Ice");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

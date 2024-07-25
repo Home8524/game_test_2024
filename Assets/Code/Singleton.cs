@@ -26,7 +26,6 @@ public class Singleton
     public bool SlowObjectGo = false;
     public bool StartActive = true;
     public bool Resume = false;
-    public float Timer = 0.0f;
     public bool Die = false;
     public bool LeftView = false;
     public Vector2 P1Pos = new Vector2(6.6f, 4.7f);

@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         Managers.uiManager.LoadUI();
         Managers.uiManager.ActiveUi(eCanvas.text);
-        Managers.uiManager.SetReadyTextEvent(Resume);
+        Managers.uiManager.SetReadyTextEvent(ReadyAction);
 
         RouteLine = GameObject.Find("BlueRoute");
         BackGround = GameObject.Find("BackGround");
@@ -97,6 +97,12 @@ public class PlayerController : MonoBehaviour
         Scale = 0.0f;
         Speed = 5.0f;
         Die = 0;
+
+
+        if (Singleton.GetInstance.StartActive == false) return;
+
+        //Ready Action
+        ReadyAction();
     }
     private void Update()
     {
@@ -146,12 +152,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Resume()
+    private void ReadyAction()
     {
-        StartCoroutine(coResume());
+        StartCoroutine(coReadyAction());
     }
 
-    private IEnumerator coResume()
+    private IEnumerator coReadyAction()
     {
         float updateTime = 0f;
 
@@ -216,21 +222,7 @@ public class PlayerController : MonoBehaviour
                     Scale += Time.deltaTime * 1.0f;
                 RouteLine.transform.localScale = new Vector3(Scale, Scale, 1.0f);
             }
-            
-            //Ready Action
-            Timer = Singleton.GetInstance.Timer;
-            Timer += Time.deltaTime*1.0f;
-            if (Timer >= 1.2f)
-                CanvansText.gameObject.SetActive(false);
-            else if (Timer >= 1.0f)
-                CanvansText.text = "½ÃÀÛ!";
-            else if (Timer >= 0.75f)
-                CanvansText.text = "1";
-            else if (Timer >= 0.5f)
-                CanvansText.text = "2";
-            else if (Timer >= 0.25f)
-                CanvansText.text = "3";
-            Singleton.GetInstance.Timer = Timer;
+
             //Flash Action
             if(FlashBool)
             {
