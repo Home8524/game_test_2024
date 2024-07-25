@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     //Die
     private int Die;
 
+    private float dt;
     private bool coll = false;
     GameObject Test = null;
     private void Awake()
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         Managers.uiManager.LoadUI();
         Managers.uiManager.ActiveUi(eCanvas.text);
+        Managers.uiManager.SetReadyTextEvent(Resume);
 
         RouteLine = GameObject.Find("BlueRoute");
         BackGround = GameObject.Find("BackGround");
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
         //리로드시 타임스케일 0->1로 변경하여 재시작
         Time.timeScale = 1;
         CanvansText = GameObject.Find("Ready").GetComponent<Text>();
+        dt = Time.deltaTime;
 
         Vector2 Tmp = new Vector2(5.8f,5.7f);   
         //현재 타일의 위치 저장
@@ -142,29 +145,41 @@ public class PlayerController : MonoBehaviour
             Singleton.GetInstance.Die = true;
         }
     }
-    private void FixedUpdate()
-    {   
-        if(!Singleton.GetInstance.StartActive&&Singleton.GetInstance.Resume)
+
+    private void Resume()
+    {
+        StartCoroutine(coResume());
+    }
+
+    private IEnumerator coResume()
+    {
+        float updateTime = 0f;
+
+        while(true)
         {
-            //Ready Action
-            Timer = Singleton.GetInstance.Timer;
-            Timer += Time.deltaTime * 1.0f;
-            if (Timer >= 1.2f)
+            updateTime += dt;
+
+            if (updateTime >= 1.2f)
             {
                 CanvansText.gameObject.SetActive(false);
                 Singleton.GetInstance.StartActive = true;
                 AudioS.UnPause();
+                break;
             }
-            else if (Timer >= 1.0f)
+            else if (updateTime >= 1.0f)
                 CanvansText.text = "시작!";
-            else if (Timer >= 0.75f)
+            else if (updateTime >= 0.75f)
                 CanvansText.text = "1";
-            else if (Timer >= 0.5f)
+            else if (updateTime >= 0.5f)
                 CanvansText.text = "2";
-            else if (Timer >= 0.25f)
+            else if (updateTime >= 0.25f)
                 CanvansText.text = "3";
-            Singleton.GetInstance.Timer = Timer;
+
+            yield return new WaitForSeconds(dt);
         }
+    }
+    private void FixedUpdate()
+    {
         if (Singleton.GetInstance.StartActive)
         {
             //사망시

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,9 +15,16 @@ public class UIManager : MonoBehaviour
     Transform readyText;
 
     //ui 연관된 캔버스는 해당 매니저에서 관리, 기능작동
+    UnityAction readyTextEvent;
+
     private void Awake()
     {
         Managers.uiManager = this;
+    }
+
+    public void SetReadyTextEvent(UnityAction onAction)
+    {
+        readyTextEvent = onAction;
     }
 
     public void LoadUI()
@@ -64,5 +72,6 @@ public class UIManager : MonoBehaviour
     public void ActiveReadyText()
     {
         readyText.gameObject.SetActive(true);
+        readyTextEvent?.Invoke();
     }
 }
