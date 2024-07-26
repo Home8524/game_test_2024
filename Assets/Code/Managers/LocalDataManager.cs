@@ -24,9 +24,11 @@ public class LocalDataManager
         return true;
     }
 
-    public List<TileData> LoadTileData()
+    public List<TileData> LoadTileData(int stageNum)
     {
-        Load("stage1.json", out JsonTileData data);
+        string name = "stage" + stageNum + ".json";
+
+        Load(name, out JsonTileData data);
         return data.datas;
     }
 

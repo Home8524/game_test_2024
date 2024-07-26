@@ -947,6 +947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383046183}
   - component: {fileID: 383046184}
+  - component: {fileID: 383046185}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -982,6 +983,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba86bc86955b3e438af135c966f540a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &383046185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383046182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca3db579f9befb4eb8e244be7c55d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioS: {fileID: 963194230}
+  dieText: {fileID: 853243464}
+  redBall: {fileID: 580596259057641228}
+  blueBall: {fileID: 448516652}
 --- !u!1 &389160186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6098,7 +6115,8 @@ PrefabInstance:
       propertyPath: textCanvas
       value: 
       objectReference: {fileID: 2064563619}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 994451998383958579, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
 --- !u!1001 &1315173179196764779
 PrefabInstance:
@@ -6222,4 +6240,5 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1277767590088059218, guid: 666ce85465e689546b5a3cba5d04a7b3, type: 3}
+    - {fileID: 1277767590088059216, guid: 666ce85465e689546b5a3cba5d04a7b3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 666ce85465e689546b5a3cba5d04a7b3, type: 3}
