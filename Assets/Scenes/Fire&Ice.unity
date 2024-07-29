@@ -5332,8 +5332,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1913091387
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Time: 0.5
   m_Parameters:
@@ -6058,6 +6058,18 @@ PrefabInstance:
     - target: {fileID: 994451997506547357, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
       propertyPath: m_LocalScale.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 994451998383958576, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 994451998383958576, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 994451998383958576, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1913091387
       objectReference: {fileID: 0}
     - target: {fileID: 994451998383958576, guid: 160941445d1b48642bbeff18a1fb1194, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time

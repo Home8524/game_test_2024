@@ -58,6 +58,13 @@ class BallController : MonoBehaviour
     //배경
     GameObject backGround;
 
+    //판정선
+    private GameObject redRouteLine;
+    private GameObject blueRouteLine;
+
+    private float redRouteScale;
+    private float blueRouteScale;
+
     private void Awake()
     {
         lightPrefabs = Resources.Load("Prefabs/Light") as GameObject;
@@ -65,6 +72,9 @@ class BallController : MonoBehaviour
         textPrefabs2 = Resources.Load("Prefabs/Fast") as GameObject;
         textPrefabs3 = Resources.Load("Prefabs/Wrong") as GameObject;
         boom = Resources.Load("Prefabs/SparkBlue") as GameObject;
+
+        blueRouteLine = GameObject.Find("BlueRoute");
+        redRouteLine = GameObject.Find("RedRoute");
     }
 
     private void Start()
@@ -85,6 +95,7 @@ class BallController : MonoBehaviour
         if (Singleton.GetInstance.StartActive == false) return;
 
         tileNum = 0;
+        wayRoute = -1.0f;
 
         LoadPlayStage();
         //Ready Action
@@ -132,17 +143,17 @@ class BallController : MonoBehaviour
         {
             PosSave = Singleton.GetInstance.PosSave;
             blueBall.RotateAround(redBall.position, Vector3.back, speed);
-            //RouteLine.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
-            //Scale = 0.0f;
+            blueRouteLine.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
+            blueRouteScale = 0.0f;
 
             return;
         }
 
-        /*
-        if (Scale < 0.5f)
-            Scale += Time.deltaTime * 1.0f;
-        RouteLine.transform.localScale = new Vector3(Scale, Scale, 1.0f);
-        */
+        
+        if (blueRouteScale < 0.5f)
+            blueRouteScale += Time.deltaTime * 1.0f;
+        blueRouteLine.transform.localScale = new Vector3(blueRouteScale, blueRouteScale, 1.0f);
+        
     }
 
     private void CheckBlueBall()
@@ -151,17 +162,17 @@ class BallController : MonoBehaviour
         {
             PosSave = Singleton.GetInstance.PosSave;
             redBall.RotateAround(blueBall.position, Vector3.back, speed);
-            //RouteLine.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
-            //Scale = 0.0f;
+            redRouteLine.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
+            redRouteScale = 0.0f;
 
             return;
         }
 
-        /*
-        if (Scale < 0.5f)
-            Scale += Time.deltaTime * 1.0f;
-        RouteLine.transform.localScale = new Vector3(Scale, Scale, 1.0f);
-        */
+        
+        if (redRouteScale < 0.5f)
+            redRouteScale += Time.deltaTime * 1.0f;
+        redRouteLine.transform.localScale = new Vector3(redRouteScale, redRouteScale, 1.0f);
+        
     }
 
     private void FixedUpdate()
