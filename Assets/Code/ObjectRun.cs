@@ -28,13 +28,6 @@ public class ObjectRun : MonoBehaviour
                if (transform.position.x < -100.0f)
                    Destroy(gameObject);
            }
-           if(gameObject.layer!=7&&Singleton.GetInstance.TimeNum==33)
-           {
-               Color Tmp = new Color(153.0f / 255.0f, 83.0f / 255.0f, 1.0f);
-               transform.GetComponent<SpriteRenderer>().color = Tmp;
-           }
         }
-
-
     }
 }

@@ -24,12 +24,12 @@ public class LocalDataManager
         return true;
     }
 
-    public List<TileData> LoadTileData(int stageNum)
+    public JsonStageData LoadStageData(int stageNum)
     {
         string name = "stage" + stageNum + ".json";
 
-        Load(name, out JsonTileData data);
-        return data.datas;
+        Load(name, out JsonStageData data);
+        return data;
     }
 
     public bool Save<T>(string path, in T data)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 class BallController : MonoBehaviour
@@ -22,11 +23,7 @@ class BallController : MonoBehaviour
     public AudioSource audioS;
     public Text dieText;
 
-    //방향 전환시 회전값에 곱해줄 값
-    private float wayRoute;
-
-    //Die 사망 진행도에 관한 step << 추후 변경해야함.
-    private int die;
+    private bool endGameProgress;
 
     //회전용 오브젝트
     [SerializeField] private Transform redBall;
@@ -39,10 +36,6 @@ class BallController : MonoBehaviour
 
     //Ball Speed
     private float speed = 5.0f;
-
-    //Flash
-    private GameObject flash;
-    private bool flashBool;
 
     //Tile Pos List
     private List<Vector2> posList;
@@ -65,6 +58,10 @@ class BallController : MonoBehaviour
 
     //카메라 스크립트
     private CameraControll cControll;
+
+    //연출 리스트
+    private Queue<EffectData> eDatas;
+    private int effectTileNum;
 
     private GameObject textBox;
     private GameObject lightBox;
@@ -97,15 +94,15 @@ class BallController : MonoBehaviour
         Time.timeScale = 1;
         canvansText = GameObject.Find("Ready").GetComponent<Text>();
         dt = Time.deltaTime;
-        flash = GameObject.Find("Flash");
-        flashBool = false;
         isRed = true;
         backGround = GameObject.Find("BackGround");
 
         if (Singleton.GetInstance.StartActive == false) return;
 
         tileNum = 0;
-        wayRoute = -1.0f;
+        endGameProgress = false;
+
+        Managers.effectManager.SetObject();
 
         LoadPlayStage();
         //Ready Action
@@ -114,7 +111,9 @@ class BallController : MonoBehaviour
 
     private void LoadPlayStage()
     {
-        var dataList = Managers.dataManager.LoadTileData(Singleton.GetInstance.playStage);
+        var jsonData = Managers.dataManager.LoadStageData(Singleton.GetInstance.playStage);
+        var dataList = jsonData.datas;
+        var effectList = jsonData.effects;
 
         tileCount = dataList.Count;
         posList = new List<Vector2>();
@@ -125,11 +124,25 @@ class BallController : MonoBehaviour
 
             posList.Add(pos);
         }
+
+        effectTileNum = -1;
+        eDatas = new Queue<EffectData>();
+
+        if (effectList.Count == 0) return;
+
+        //처음 연출 작동시점
+        effectTileNum = effectList[0].tile;
+
+        foreach(var data in effectList)
+        {
+            eDatas.Enqueue(data);    
+        }
+
     }
     private void Update()
     {
         // 사망처리 진행중에는 추가적인 입력 막기 위함
-        if (die > 0) return;
+        if (endGameProgress) return;
 
         //다음 타일로의 이동판정
         if(Input.GetKeyDown(KeyCode.Space))
@@ -186,58 +199,42 @@ class BallController : MonoBehaviour
     private void FixedUpdate()
     {
         if (Singleton.GetInstance.StartActive == false) return;
-
-        //사망시
-        if (die == 1)
-        {
-            currentBall.position = Vector3.MoveTowards(currentBall.position, prevBall.position, 0.01f);
-            if (currentBall.position == prevBall.position)
-                die = 2;
-        }
         
-
-        //카메라도 같이 움직이게 해주려고 값 받음
-        Singleton.GetInstance.WayRoute = wayRoute;
-
-        if (Singleton.GetInstance.TimeNum == 14)
-            wayRoute = 1.0f;
-        if (Singleton.GetInstance.TimeNum == 23)
-            wayRoute = -1.0f;
-
         CheckRedBall();
         CheckBlueBall();
+    }
 
-        //Flash Action
-        if (flashBool)
+    private IEnumerator coDIeAction()
+    {
+        float dt = Time.fixedDeltaTime;
+
+        while(true)
         {
-            Image Tmp = flash.GetComponent<Image>();
-            Color FlashColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            Tmp.color = FlashColor;
-            flashBool = false;
+            if (currentBall.position == prevBall.position) break;
+            currentBall.position = Vector3.MoveTowards(currentBall.position, prevBall.position, 0.01f);
+
+            yield return new WaitForSeconds(dt);
         }
-        else
-        {
-            Image Tmp = flash.GetComponent<Image>();
-            if (Tmp.color.a > 0)
-            {
-                Color FlashColor = Tmp.color;
-                FlashColor.a -= Time.deltaTime * 3.0f;
-                Tmp.color = FlashColor;
-            }
-        }
-}
+
+        GameObject obj = Instantiate(boom);
+        obj.transform.position = currentBall.position;
+        prevBall.gameObject.SetActive(false);
+        currentBall.gameObject.SetActive(false);
+
+        //진행도
+        float Tmp = (float)tileNum / 160.0f * 100.0f;
+        dieText.gameObject.SetActive(true);
+        dieText.text = string.Format("{0:0.#}", Tmp) + "%";
+
+        //Singleton 의 die 플래그와 지역변수 die를 같이 쓰는 이유는 카메라에 달아놓은 restart 작동에 문제생기지 않게 하기 위함
+        Singleton.GetInstance.Die = true;
+    }
 
     private void CheckNextTile()
     {
         int idx = ++tileNum;
 
         Vector2 ballPos = isRed ? blueBall.position : redBall.position;
-
-        //마지막 타일
-        if (idx == tileCount - 1)
-        {
-            return;
-        }
 
         Vector2 tilePos = posList[idx];
 
@@ -247,11 +244,34 @@ class BallController : MonoBehaviour
         {
             currentBall = isRed ? blueBall : redBall;
             prevBall = isRed ? redBall : blueBall;
-            die = 1;
+            endGameProgress = true;
             audioS.Stop();
+
+            StartCoroutine(coDIeAction());
+
+            var failText = Instantiate(textPrefabs3);
+            tilePos.x -= 0.5f;
+            tilePos.y += 1.3f;
+            failText.transform.parent = textBox.transform;
+            failText.transform.position = tilePos;
             return;
         }
         */
+
+        //클리어
+        if (idx == tileCount - 1)
+        {
+            Managers.effectManager.ClearAction();
+            dieText.gameObject.SetActive(true);
+            dieText.text = "축하합니다!";
+            endGameProgress = true;
+            Invoke("ClearAction", 1.5f);
+            return;
+        }
+
+        //연출 여부 체크
+        CheckEffectAction();
+
         Transform obj = isRed ? blueBall : redBall;
 
         //성공시 타일에 빛남
@@ -265,7 +285,6 @@ class BallController : MonoBehaviour
         Vector2 Pos = tilePos;
         Pos.x -= 0.5f;
         Pos.y += 1.3f;
-        textObj.transform.name = "Text " + tileNum;
         textObj.transform.parent = textBox.transform;
         textObj.transform.position = Pos;
 
@@ -279,6 +298,32 @@ class BallController : MonoBehaviour
         cControll.SetPos(diff);
 
         backGround.transform.position += diff;
+    }
+
+    private void ClearAction()
+    {
+        SceneManager.LoadScene("World");
+    }
+
+    private void CheckEffectAction()
+    {
+        if (eDatas.Count == 0) return;
+        if (tileNum != effectTileNum) return;
+
+        while(true)
+        {
+            if (eDatas.Count == 0) break;
+
+            int next = eDatas.Peek().tile;
+            if (next != tileNum)
+            {
+                effectTileNum = next;
+                break;
+            }
+
+            var data = eDatas.Dequeue();
+            Managers.effectManager.EffectAction(data);
+        }
     }
     private void ReadyAction()
     {

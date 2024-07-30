@@ -8,4 +8,6 @@ public static class Managers
 {
     public static LocalDataManager dataManager = new LocalDataManager();
     public static UIManager uiManager;
+    public static EffectManager effectManager;
+
 }

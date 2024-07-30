@@ -71,7 +71,8 @@ public class CreateTile : MonoBehaviour
     {
         int tileNum = -1;
 
-        var dataList = Managers.dataManager.LoadTileData(Singleton.GetInstance.playStage);
+        var jsonData = Managers.dataManager.LoadStageData(Singleton.GetInstance.playStage);
+        var dataList = jsonData.datas;
 
         foreach(var data in dataList)
         {

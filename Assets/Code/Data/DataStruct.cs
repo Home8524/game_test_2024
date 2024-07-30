@@ -5,9 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 
 [Serializable]
-public class JsonTileData
+public class JsonStageData
 {
+    public List<EffectData> effects;
     public List<TileData> datas;
+}
+
+[Serializable]
+public class EffectData
+{
+    public string type;
+    public int tile;
+    public CustomColor color;
+}
+
+[Serializable]
+public class CustomColor
+{
+    public float r;
+    public float g;
+    public float b;
 }
 
 [Serializable]
