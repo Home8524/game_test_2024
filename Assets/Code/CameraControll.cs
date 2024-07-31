@@ -36,11 +36,6 @@ public class CameraControll : MonoBehaviour
     }
     private void Restart()
     {
-        Singleton.GetInstance.BallSet = 0;
-        Singleton.GetInstance.PosSave = new Vector2(0.0f, 0.0f);
-        Singleton.GetInstance.TimeNum = 0;
-        Singleton.GetInstance.Coll = false;
-        Singleton.GetInstance.WayRoute = -1.0f;
         Singleton.GetInstance.SlowObjectGo = false;
         Singleton.GetInstance.StartActive = true;
         Singleton.GetInstance.Resume = false;

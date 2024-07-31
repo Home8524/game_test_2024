@@ -17,12 +17,6 @@ public class Singleton
         }
     }
 
-    // 0 : Ball1 , 1 : Ball2
-    public int BallSet = 0;
-    public Vector2 PosSave = new Vector2(5.8f,5.7f);
-    public int TimeNum = 0;
-    public bool Coll = false;
-    public float WayRoute = -1.0f;
     public bool SlowObjectGo = false;
     public bool StartActive = true;
     public bool Resume = false;
