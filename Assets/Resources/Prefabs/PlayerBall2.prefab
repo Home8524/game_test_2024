@@ -10,12 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6820240680369653501}
   - component: {fileID: 6820240680369653502}
-  - component: {fileID: 6820240680369653499}
-  - component: {fileID: 6820240680369653498}
   - component: {fileID: 3224992691347861471}
   - component: {fileID: 6473277495508344910}
-  - component: {fileID: 1277767590088059218}
-  - component: {fileID: 1277767590088059216}
+  - component: {fileID: 1977419364}
   m_Layer: 6
   m_Name: PlayerBall2
   m_TagString: Untagged
@@ -30,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6820240680369653472}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.8, y: 5.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -89,53 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6820240680369653499
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6820240680369653472}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.4666667, y: 1.0666667}
-    newSize: {x: 0.80597013, y: 0.80597013}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.80597013, y: 0.80597013}
-  m_EdgeRadius: 0
---- !u!50 &6820240680369653498
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6820240680369653472}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!95 &3224992691347861471
 Animator:
   serializedVersion: 3
@@ -166,7 +116,7 @@ SortingGroup:
   m_SortingLayerID: 1913091387
   m_SortingLayer: 2
   m_SortingOrder: 2
---- !u!96 &1277767590088059218
+--- !u!96 &1977419364
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -215,77 +165,23 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.7600002
+        time: 0.020832062
+        value: 0.5400009
         inSlope: 0
-        outSlope: 0.14399901
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.9804004
-      - serializedVersion: 3
-        time: 0.50529623
-        value: 0.41093194
-        inSlope: -1.8659831
-        outSlope: -1.8659831
-        tangentMode: 1
+        outSlope: 0
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.51057065
-        value: 0.44924814
-        inSlope: -1.3985634
-        outSlope: -1.3985634
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 0.5124992
-        value: 0.4000022
-        inSlope: 0
-        outSlope: 1.3636339
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.47311896
-      - serializedVersion: 3
-        time: 0.5208323
-        value: 0.40999818
-        inSlope: -0.78139526
-        outSlope: 0
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.42574257
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.9374929
-        value: 0.05000609
+        time: 1
+        value: 0.050000012
         inSlope: 0
         outSlope: 0
-        tangentMode: 1
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 0.95416665
-        value: 0.030000001
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.9555838
-        value: 0.03796062
-        inSlope: -1.7782729
-        outSlope: -1.7782729
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -327,18 +223,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &1277767590088059216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6820240680369653472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fd328312fe56934c8786f41b4565ab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6244502548562291141
 PrefabInstance:
   m_ObjectHideFlags: 0

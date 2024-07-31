@@ -17,7 +17,6 @@ class BallController : MonoBehaviour
     private GameObject textPrefabs2;
     private GameObject textPrefabs3;
     private GameObject boom;
-    private float dt;
     private Text canvansText;
     //Audio Controll
     public AudioSource audioS;
@@ -93,19 +92,14 @@ class BallController : MonoBehaviour
         //리로드시 타임스케일 0->1로 변경하여 재시작
         Time.timeScale = 1;
         canvansText = GameObject.Find("Ready").GetComponent<Text>();
-        dt = Time.deltaTime;
         isRed = true;
         backGround = GameObject.Find("BackGround");
-
-        if (Singleton.GetInstance.StartActive == false) return;
-
         tileNum = 0;
         endGameProgress = false;
 
         Managers.effectManager.SetObject();
 
         LoadPlayStage();
-        //Ready Action
         ReadyAction();
     }
 
@@ -124,6 +118,12 @@ class BallController : MonoBehaviour
 
             posList.Add(pos);
         }
+
+        Vector2 startPos = posList[0];
+        redBall.position = startPos;
+
+        startPos += Singleton.GetInstance.ballOffset;
+        blueBall.position = startPos;
 
         effectTileNum = -1;
         eDatas = new Queue<EffectData>();
@@ -239,7 +239,7 @@ class BallController : MonoBehaviour
         Vector2 tilePos = posList[idx];
 
         //실패 -> 사망 액션 진행
-        /*
+        
         if(Vector2.Distance(ballPos, tilePos) > 1.0f)
         {
             currentBall = isRed ? blueBall : redBall;
@@ -256,7 +256,7 @@ class BallController : MonoBehaviour
             failText.transform.position = tilePos;
             return;
         }
-        */
+        
 
         //클리어
         if (idx == tileCount - 1)
@@ -336,7 +336,7 @@ class BallController : MonoBehaviour
 
         while (true)
         {
-            updateTime += dt;
+            updateTime += Time.deltaTime;
 
             if (updateTime >= 1.2f)
             {
@@ -354,7 +354,7 @@ class BallController : MonoBehaviour
             else if (updateTime >= 0.25f)
                 canvansText.text = "3";
 
-            yield return new WaitForSeconds(dt);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 }
