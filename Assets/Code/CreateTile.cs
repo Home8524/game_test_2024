@@ -69,7 +69,7 @@ public class CreateTile : MonoBehaviour
 
     void LoadTile()
     {
-        int tileNum = -1;
+        int tileNum = 0;
 
         var jsonData = Managers.dataManager.LoadStageData(Singleton.GetInstance.playStage);
         var dataList = jsonData.datas;
@@ -88,10 +88,7 @@ public class CreateTile : MonoBehaviour
 
             go.transform.position = new Vector2(float.Parse(data.pos.x), float.Parse(data.pos.y));
             go.transform.rotation = Quaternion.Euler(new Vector3(0,0,data.rotate));
-
-            if(tileNum == -1) go.transform.name = "Root Tile";
-            else go.transform.name = "Tile " + tileNum;
-
+            go.transform.name = "Tile " + tileNum;
             tileNum++;
         }
     }
